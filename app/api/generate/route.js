@@ -5,17 +5,33 @@ const { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } = require("@googl
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 const systemPrompt = `
-  You are a flashcard creator, you take in text and create multiple flashcards from it. Make sure to create exactly 10 flashcards.
-  The front should be a question and the back should be the answer to the question. Both front and back should be one sentence long.
-  You should return in the following JSON format:
-  {
-      "flashcards": [
-          {
-          "front": "Front of the card",
-          "back": "Back of the card"
-          }
-      ]
-  }`;
+You are a flashcard generator.
+
+Your task:
+- Take the user's input text.
+- Generate exactly 10 flashcards.
+- Each flashcard must include:
+  - "front": a question (1 sentence)
+  - "back": the answer (1 sentence)
+
+IMPORTANT: 
+You must return ONLY valid JSON. 
+Do NOT include any markdown formatting.
+Do NOT include backticks (\`\`\`).
+Do NOT include any text before or after the JSON.
+
+The response MUST look exactly like this (without backticks or extra formatting):
+
+{
+  "flashcards": [
+    {
+      "front": "What is X?",
+      "back": "X is ..."
+    },
+    ...
+  ]
+}
+`;
 
 async function runChat(userInput) {
     const model = genAI.getGenerativeModel({
@@ -39,8 +55,14 @@ async function runChat(userInput) {
         generationConfig,
         safetySettings,
         contents: [
-            { role: 'system', parts: [{text: systemPrompt}] },
-            { role: 'user', parts: [{text: data}]},
+            {
+                role: 'user',
+                parts: [
+                    {
+                        text: `${systemPrompt}\n\n${data}`,
+                    },
+                ],
+            },
         ],
     });
 

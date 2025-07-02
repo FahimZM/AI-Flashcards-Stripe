@@ -68,6 +68,16 @@ export default function Generate() {
       alert('Please enter a name for your flashcard set.')
       return
     }
+
+    if (!user || !user.id) {
+    alert('User not authenticated')
+    return
+    }
+
+    if (!Array.isArray(flashcards) || flashcards.length === 0) {
+    alert('No flashcards to save')
+    return
+    }
   
     try {
       const userDocRef = doc(db, 'users', user.id)
