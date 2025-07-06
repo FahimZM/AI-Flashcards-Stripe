@@ -21,14 +21,24 @@ import { doc, getDoc, setDoc, collection, writeBatch } from 'firebase/firestore'
 import { db } from '@/firebase'
 import { useUser } from '@clerk/nextjs'
 import Layout from '../api/components/layout'
+import { useRouter } from 'next/navigation'
+import { useEffect } from 'react'
 
 export default function Generate() {
-  const {user} = useUser()
+  const {user, isLoaded} = useUser()
   const [text, setText] = useState('')
   const [flashcards, setFlashcards] = useState([])
   const [setName, setSetName] = useState('')
   const [dialogOpen, setDialogOpen] = useState(false)
   const [flipped, setFlipped] = useState([])
+
+  const router = useRouter()
+
+  useEffect(() => {
+    if (isLoaded && (!user || !user.id)) {
+      router.push('/sign-in')
+    }
+  }, [user, isLoaded, router])
 
 
   const handleSubmit = async () => {
