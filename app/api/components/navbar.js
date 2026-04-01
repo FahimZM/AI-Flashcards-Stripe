@@ -18,7 +18,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import BoltIcon from '@mui/icons-material/Bolt';
 import { SignOutButton, UserButton, SignedIn } from '@clerk/nextjs'
 
-const pages = ['Home', 'Generate', 'Flashcards'];
+const pages = [ 'Generate', 'Flashcards'];
 const settings = ['Logout'];
 
 function Navbar() {
@@ -44,24 +44,22 @@ function Navbar() {
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters >
-          <BoltIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="/home"
-            sx={{
-              mr: 2,
-              display: { xs: 'none', md: 'flex' },
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: '#F4D9D0',
-              textDecoration: 'none',
-            }}
-          >
-            Flash AI
-          </Typography>
+          <BoltIcon sx={{ mr: 1, color: "#FFD700" }} />
+            <Typography
+              variant="h6"
+              component="a"
+              href="/"
+              sx={{
+                mr: 2,
+                fontWeight: 700,
+                letterSpacing: ".15rem",
+                color: "#FFD700",
+                textDecoration: "none",
+                fontFamily: '"Inter", sans-serif',
+              }}
+            >
+              Flash AI
+            </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
@@ -93,7 +91,7 @@ function Navbar() {
               }}
             >
               {pages.map((page) => (      
-                <MenuItem onClick={handleCloseNavMenu}>
+                <MenuItem key={page} onClick={handleCloseNavMenu}>
                   <Typography textAlign="center">{page}</Typography>
                 </MenuItem>
               ))}
@@ -103,7 +101,7 @@ function Navbar() {
             variant="h5"
             noWrap
             component="a"
-            href="/home"
+            href="/"
             sx={{
               mr: 2,
               display: { xs: 'flex', md: 'none' },

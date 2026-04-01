@@ -20,7 +20,7 @@ export default function SignUpPage() {
 
             <Box display='flex' flexDirection='column' alignItems='center' justifyContent='center'>
                 <Typography variant="h4" sx={{p: 2}}>Sign Up</Typography>
-                <SignUp fallbackRedirectUrl="/home"/>
+                <SignUp fallbackRedirectUrl="/"/>
             </Box>
         </Container>
     )
